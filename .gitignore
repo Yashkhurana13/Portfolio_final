@@ -470,6 +470,8 @@ marimo/_lsp/
 __marimo__/
 >>>>>>> d3bc354669589b766ed43a0126240b0c787616bd
 
-# Media files (user uploads - store in cloud storage for production)
-/media/*
-!/media/*/.gitkeep
+# Media files (user uploads - track folder structure only)
+# Ignore all files in media directory
+media/**/*.*
+# But allow directories to be tracked (using .gitkeep)
+!media/**/
