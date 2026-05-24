@@ -1,0 +1,27 @@
+# Core Django
+Django==4.2.30
+
+# Security & Production
+python-dotenv==1.0.1
+whitenoise==6.8.2
+gunicorn==22.0.0
+
+# Database (Uncomment for production)
+psycopg2-binary==2.9.10
+dj-database-url==2.2.0
+
+# Rate Limiting
+django-ratelimit==4.1.0
+
+# reCAPTCHA
+django-recaptcha==4.0.0
+
+# Rich Text Editor
+django-tinymce==4.1.0
+
+# Image Processing
+Pillow==11.1.0
+
+# Security Enhancement
+django-cors-headers==4.9.0  # CORS protection
+bleach==6.2.0  # HTML sanitization

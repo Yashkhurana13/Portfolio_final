@@ -1,0 +1,448 @@
+{% extends 'base.html' %}
+{%load static %}
+{% block content %}
+<!-- Hero Section -->
+<section id="hero" class="hero-section">
+    <div class="section-container hero-container">
+        <div class="hero-left fade-in">
+            {% if profile.is_available %}
+            <div class="availability-badge">
+                <span class="dot"></span> {{ profile.available_badge_text }}
+            </div>
+            {% endif %}
+
+            <h1 class="hero-heading">Hello, I'm <span class="highlight">{{ profile.name }}</span></h1>
+
+            <div class="typewriter-container" data-words="{{ profile.typewriter_words }}">
+                <span id="typewriter-text"></span><span class="cursor">|</span>
+            </div>
+
+            <div class="hero-buttons">
+                <a href="{% url 'blog_home' %}" class="btn btn-primary">Read Blog</a>
+                {% if profile.resume %}
+                <a href="{{ profile.resume.url }}" download class="btn btn-secondary">Download Resume</a>
+                {% else %}
+                <a href="#contact" class="btn btn-secondary">Contact Me</a>
+                {% endif %}
+            </div>
+
+            <div class="hero-socials">
+                {% if profile.github_link %}
+                <a href="{{ profile.github_link }}" target="_blank" class="social-link" aria-label="GitHub">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                    </svg>
+                </a>
+                {% endif %}
+                {% if profile.linkedin_link %}
+                <a href="{{ profile.linkedin_link }}" target="_blank" class="social-link" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                    </svg>
+                </a>
+                {% endif %}
+                {% if profile.email %}
+                <a href="mailto:{{ profile.email }}" class="social-link" aria-label="Gmail">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M20 4H4c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2zm0 2v.511l-8 6.223-8-6.222V6h16zM4 18V9.044l7.386 5.745a.994.994 0 0 0 1.228 0L20 9.044 20.002 18H4z" />
+                    </svg>
+                </a>
+                {% endif %}
+                
+            </div>
+        </div>
+        
+        <div class="hero-right fade-in stagger-2">
+            <div class="floating-cards-container">
+                <!-- Card 1 -->
+                <div class="floating-card card-top" id="hero-card-1">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                        </svg>
+                    </div>
+                    <div class="card-info">
+                        <h4 class="card-title">{{ profile.card_1_title|default:"Currently Learning" }}</h4>
+                        <p class="card-text">{{ profile.card_1_text|default:"Django, React, & System Design" }}</p>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="floating-card card-middle" id="hero-card-2">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
+                        </svg>
+                    </div>
+                    <div class="card-info">
+                        <h4 class="card-title">{{ profile.card_2_title|default:"Working On" }}</h4>
+                        <p class="card-text">{{ profile.card_2_text|default:"Premium Agentic Portfolio App" }}</p>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="floating-card card-bottom" id="hero-card-3">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <circle cx="12" cy="12" r="6"></circle>
+                            <circle cx="12" cy="12" r="2"></circle>
+                        </svg>
+                    </div>
+                    <div class="card-info">
+                        <h4 class="card-title">{{ profile.card_3_title|default:"Focused On" }}</h4>
+                        <p class="card-text">{{ profile.card_3_text|default:"High Performance Web Architectures" }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="about-section">
+    <div class="section-container">
+        <div class="about-left fade-in">
+            <!-- Terminal System Animation -->
+            <div class="terminal-box">
+                <div class="terminal-header">
+                    <span class="btn-red"></span>
+                    <span class="btn-yellow"></span>
+                    <span class="btn-green"></span>
+                    <span class="title">bash</span>
+                </div>
+                <div class="terminal-body" id="about-terminal" data-lines="{{ profile.about_terminal_lines }}"></div>
+            </div>
+        </div>
+        <div class="about-right fade-in stagger-1">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-text">
+                {{ profile.about_text|linebreaks }}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Skills Section -->
+<section id="skills" class="skills-section">
+    <div class="section-container">
+        <h2 class="section-title fade-in">Technical Skills</h2>
+        <div class="skills-wrapper fade-in stagger-1">
+            {% for category, cat_skills in skills_by_category.items %}
+            <div class="skill-category-block">
+                <h3 class="category-title">{{ category }}</h3>
+                <div class="skills-container">
+                    {% for skill in cat_skills %}
+                    <span class="skill-tag">&lt;{{ skill.name }}/&gt;</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if profile.leetcode_username %}
+        <div class="leetcode-section fade-in stagger-2">
+            <div class="lc-header">
+                <svg class="lc-logo-icon" viewBox="0 0 24 24" fill="#FFA116" width="28" height="28">
+                    <path
+                        d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .062 2.362 5.83 5.83 0 0 0 .349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414.003-1.955a1.378 1.378 0 0 0-1.951-.003l-2.396 2.392a3.021 3.021 0 0 1-4.205.038l-.02-.019-4.276-4.193c-.652-.64-.972-1.469-.948-2.263a2.68 2.68 0 0 1 .066-.523 2.545 2.545 0 0 1 .619-1.164L9.13 8.114c1.058-1.134 3.204-1.27 4.43-.278l3.501 2.831c.593.48 1.461.387 1.94-.207a1.384 1.384 0 0 0-.207-1.943l-3.5-2.831c-.8-.647-1.766-1.045-2.774-1.202l2.015-2.158A1.384 1.384 0 0 0 13.483 0zm-2.866 12.815a1.38 1.38 0 0 0-1.38 1.382 1.38 1.38 0 0 0 1.38 1.382H20.79a1.38 1.38 0 0 0 1.38-1.382 1.38 1.38 0 0 0-1.38-1.382z" />
+                </svg>
+                <h3 class="lc-title">LeetCode Progress</h3>
+                <a href="https://leetcode.com/{{ profile.leetcode_username }}/" target="_blank"
+                    class="lc-username">@{{ profile.leetcode_username }}</a>
+            </div>
+            <div class="lc-graph-embed">
+                <img src="https://leetcard.jacoblin.cool/{{ profile.leetcode_username }}?theme=light&border=0&radius=12&ext=heatmap"
+                    alt="LeetCode Heatmap" class="lc-card-img" loading="lazy" decoding="async">
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Projects Section -->
+<section id="projects" class="projects-section">
+    <div class="section-container">
+        <h2 class="section-title fade-in">Projects</h2>
+        <div class="projects-grid">
+            {% for project in projects %}
+            <div class="project-card fade-in">
+                <div class="card-header">
+                    <div class="window-controls">
+                        <i></i><i></i><i></i>
+                    </div>
+                </div>
+                {% if project.image %}
+                <div class="project-img-wrapper">
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}" class="project-image" loading="lazy" decoding="async">
+                </div>
+                {% endif %}
+                <div class="card-body">
+                    <h3 class="project-title">{{ project.title }}</h3>
+                    <p class="project-desc">{{ project.description }}</p>
+                    <div class="project-tags">
+                        {{ project.tags }}
+                    </div>
+                    <div class="project-links">
+                        {% if project.github_link %}
+                        <a href="{{ project.github_link }}" target="_blank" class="code-link">View Code</a>
+                        {% endif %}
+                        {% if project.live_link %}
+                        <a href="{{ project.live_link }}" target="_blank" class="demo-link">Live Demo</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Experience Section -->
+<section id="experience" class="experience-section">
+    <div class="section-container">
+        <h2 class="section-title fade-in">Experience</h2>
+        <div class="timeline-center">
+            {% for exp in experiences %}
+            <div
+                class="timeline-item-center fade-in {% if forloop.counter|divisibleby:2 %}right{% else %}left{% endif %}">
+                <div class="timeline-content-center">
+                    <div class="timeline-card">
+                        <h3 class="role">{{ exp.role }}</h3>
+                        <p class="company">@ {{ exp.company }}</p>
+                        <p class="date">
+                            {{ exp.start_date|date:"M Y" }} -
+                            {% if exp.current %}Present{% else %}{{ exp.end_date|date:"M Y" }}{% endif %}
+                        </p>
+                        <div class="desc">
+                            {{ exp.description|safe }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Education Section -->
+<section id="education" class="education-section">
+    <div class="section-container">
+        <h2 class="section-title fade-in">Education</h2>
+        <div class="education-timeline" id="education-timeline">
+            <div class="timeline-progress-line" id="timeline-line"></div>
+            {% for edu in education %}
+            <div class="education-item fade-in">
+                <div class="edu-badge">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 3L1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z" />
+                    </svg>
+                </div>
+                <div class="education-content">
+                    <div class="edu-card">
+                        <div class="edu-header">
+                            <h3 class="edu-institution">{{ edu.institution }}</h3>
+                            <div class="edu-degree"><span class="edu-highlight">{{ edu.degree }}</span> in {{ edu.field_of_study }}</div>
+                        </div>
+                        <div class="edu-details">
+                            <div class="edu-detail">
+                                <svg class="edu-icon" viewBox="0 0 24 24" fill="currentColor">
+                                    <path
+                                        d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z" />
+                                </svg>
+                                <span>{{ edu.start_date|date:"M Y" }} - {% if edu.current %}Present{% else %}{{ edu.end_date|date:"M Y" }}{% endif %}</span>
+                            </div>
+                            {% if edu.grade %}
+                            <div class="edu-detail">
+                                <svg class="edu-icon" viewBox="0 0 24 24" fill="currentColor">
+                                    <path
+                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                                </svg>
+                                <span class="edu-grade">{{ edu.grade }}</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% if edu.description %}
+                        <div class="edu-description">
+                            <p>{{ edu.description|linebreaks }}</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="fade-in">No education records added yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Certifications Section -->
+<section id="certifications" class="certifications-section fade-in">
+    <div class="section-container">
+        <h2 class="section-title">Certifications</h2>
+        <div class="cert-grid">
+            {% for cert in certifications %}
+            <div class="cert-card">
+                <h3>{{ cert.title }}</h3>
+                <p>{{ cert.issuer }}</p>
+                <div class="cert-footer">
+                    <span>{{ cert.date_issued|date:"M Y" }}</span>
+                    {% if cert.link %}
+                    <a href="{{ cert.link }}" target="_blank">View</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="contact-section fade-in">
+    <div class="section-container">
+        <div class="contact-wrapper">
+            <div class="terminal-form-container">
+                <h2 class="section-title">Initialize Connection</h2>
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %}">
+                    > {{ message }}
+                </div>
+                {% endfor %}
+                {% endif %}
+
+                <form class="terminal-form contact-form" method="POST" action="{% url 'portfolio_home' %}">
+                    {% csrf_token %}
+                    {{ form.media }}
+                    <div class="input-group">
+                        <label for="name">~$ set name=</label>
+                        <input type="text" id="name" name="name" required class="term-input" autocomplete="off"
+                            placeholder="echo $USER">
+                    </div>
+                    <div class="input-group">
+                        <label for="email">~$ set email=</label>
+                        <input type="email" id="email" name="email" required class="term-input" autocomplete="off"
+                            placeholder="user@host.com">
+                    </div>
+                    <div class="input-group text-group">
+                        <label for="message">~$ echo</label>
+                        <textarea id="message" name="message" rows="4" required class="term-input"
+                            placeholder="cat << EOF..."></textarea>
+                    </div>
+                    <div class="input-group captcha-group">
+                        {{ form.captcha }}
+                    </div>
+                    <button type="submit" class="btn-terminal">> ./send_message.sh</button>
+                </form>
+            </div>
+
+            <div class="social-links-container">
+                <h3 class="social-title">Connect with me</h3>
+                <div class="social-icons">
+                    {% if profile.github_link %}
+                    <a href="{{ profile.github_link }}" target="_blank" class="social-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                        </svg>
+                        <span>GitHub</span>
+                    </a>
+                    {% endif %}
+                    {% if profile.linkedin_link %}
+                    <a href="{{ profile.linkedin_link }}" target="_blank" class="social-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                        </svg>
+                        <span>LinkedIn</span>
+                    </a>
+                    {% endif %}
+                    {% if profile.email %}
+                    <a href="mailto:{{ profile.email }}" class="social-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20 4H4c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2zm0 2v.511l-8 6.223-8-6.222V6h16zM4 18V9.044l7.386 5.745a.994.994 0 0 0 1.228 0L20 9.044 20.002 18H4z" />
+                        </svg>
+                        <span>Gmail</span>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Edit Profile Modal -->
+<div class="edit-profile-modal-overlay" id="edit-profile-modal">
+    <div class="edit-profile-modal-container">
+        <div class="edit-profile-modal-header">
+            <h3>Update Profile & Hero Cards</h3>
+            <button class="edit-profile-modal-close" id="edit-profile-close-btn" aria-label="Close Modal">&times;</button>
+        </div>
+        <form class="edit-profile-form" id="edit-profile-form" method="POST" action="{% url 'update_profile' %}">
+            {% csrf_token %}
+            <div class="form-section-title">General Info</div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="profile-name">Name</label>
+                    <input type="text" id="profile-name" name="name" value="{{ profile.name }}" required class="modal-input">
+                </div>
+                <div class="form-group">
+                    <label for="profile-badge">Availability Badge</label>
+                    <input type="text" id="profile-badge" name="available_badge_text" value="{{ profile.available_badge_text }}" required class="modal-input">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="profile-typewriter">Typewriter Specialties (comma-separated)</label>
+                <input type="text" id="profile-typewriter" name="typewriter_words" value="{{ profile.typewriter_words }}" required class="modal-input">
+            </div>
+
+            <div class="form-section-title">Floating Hero Card 1</div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="card1-title">Card 1 Title</label>
+                    <input type="text" id="card1-title" name="card_1_title" value="{{ profile.card_1_title|default:'Currently Learning' }}" required class="modal-input">
+                </div>
+                <div class="form-group">
+                    <label for="card1-text">Card 1 Description</label>
+                    <input type="text" id="card1-text" name="card_1_text" value="{{ profile.card_1_text|default:'Django, React, & System Design' }}" required class="modal-input">
+                </div>
+            </div>
+
+            <div class="form-section-title">Floating Hero Card 2</div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="card2-title">Card 2 Title</label>
+                    <input type="text" id="card2-title" name="card_2_title" value="{{ profile.card_2_title|default:'Working On' }}" required class="modal-input">
+                </div>
+                <div class="form-group">
+                    <label for="card2-text">Card 2 Description</label>
+                    <input type="text" id="card2-text" name="card_2_text" value="{{ profile.card_2_text|default:'Premium Agentic Portfolio App' }}" required class="modal-input">
+                </div>
+            </div>
+
+            <div class="form-section-title">Floating Hero Card 3</div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="card3-title">Card 3 Title</label>
+                    <input type="text" id="card3-title" name="card_3_title" value="{{ profile.card_3_title|default:'Focused On' }}" required class="modal-input">
+                </div>
+                <div class="form-group">
+                    <label for="card3-text">Card 3 Description</label>
+                    <input type="text" id="card3-text" name="card_3_text" value="{{ profile.card_3_text|default:'High Performance Web Architectures' }}" required class="modal-input">
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn btn-modal-cancel" id="edit-profile-cancel-btn">Cancel</button>
+                <button type="submit" class="btn btn-modal-save" id="edit-profile-save-btn">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

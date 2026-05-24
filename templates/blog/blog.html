@@ -1,0 +1,390 @@
+{% extends 'base.html' %}
+{% load blog_extras %}
+
+{% block title %}
+    {% if selected_post %}
+        {{ selected_post.title }} | Yash Khurana Blog
+    {% else %}
+        Blog & Thoughts | Yash Khurana
+    {% endif %}
+{% endblock %}
+
+{% block meta_description %}
+    {% if selected_post %}
+        {{ selected_post.body|striptags|truncatewords:25 }}
+    {% else %}
+        Read thoughts, engineering experiences, and tutorials on software development, AI, productivity, and backend development.
+    {% endif %}
+{% endblock %}
+
+{% block og_title %}
+    {% if selected_post %}
+        {{ selected_post.title }}
+    {% else %}
+        Blog & Thoughts | Yash Khurana
+    {% endif %}
+{% endblock %}
+
+{% block og_description %}
+    {% if selected_post %}
+        {{ selected_post.body|striptags|truncatewords:25 }}
+    {% else %}
+        Read thoughts, engineering experiences, and tutorials on software development, AI, productivity, and backend development.
+    {% endif %}
+{% endblock %}
+
+{% block og_image %}
+    {% if selected_post and selected_post.image %}
+        {{ request.scheme }}://{{ request.get_host }}{{ selected_post.image.url }}
+    {% else %}
+        {{ block.super }}
+    {% endif %}
+{% endblock %}
+
+{% block twitter_title %}
+    {% if selected_post %}
+        {{ selected_post.title }}
+    {% else %}
+        Blog & Thoughts | Yash Khurana
+    {% endif %}
+{% endblock %}
+
+{% block twitter_description %}
+    {% if selected_post %}
+        {{ selected_post.body|striptags|truncatewords:25 }}
+    {% else %}
+        Read thoughts, engineering experiences, and tutorials on software development, AI, productivity, and backend development.
+    {% endif %}
+{% endblock %}
+
+{% block twitter_image %}
+    {% if selected_post and selected_post.image %}
+        {{ request.scheme }}://{{ request.get_host }}{{ selected_post.image.url }}
+    {% else %}
+        {{ block.super }}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<section class="blog-section">
+    <div class="section-container">
+        {% if selected_post %}
+        <!-- Single Post View -->
+        <div class="single-post-view fade-in">
+            <a href="{% url 'blog_home' %}" class="back-to-list-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                Back to all articles
+            </a>
+            
+            <article class="full-post-article">
+                {% if selected_post.image %}
+                <div class="post-hero-image">
+                    <img src="{{ selected_post.image.url }}" alt="{{ selected_post.title }}">
+                </div>
+                {% endif %}
+                
+                <header class="post-article-header">
+                    <div class="post-meta-badges">
+                        <span class="category-badge category-{{ selected_post.category|slugify }}">{{ selected_post.category }}</span>
+                        <span class="read-time-badge">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            {{ selected_post.read_time }}
+                        </span>
+                    </div>
+                    
+                    <h1 class="post-article-title">{{ selected_post.title }}</h1>
+                    
+                    <div class="post-meta-info">
+                        <span class="meta-date">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                            Published on {{ selected_post.date_posted|date:"F d, Y" }}
+                        </span>
+                    </div>
+                </header>
+                
+                <div class="post-article-content">
+                    {{ selected_post.body|sanitise_html }}
+                </div>
+                
+                <footer class="post-article-footer">
+                    <div class="share-section">
+                        <h3>Share this article</h3>
+                        <div class="share-buttons">
+                            <a href="https://wa.me/?text={{ 'Check out this article: '|add:selected_post.title|add:' — '|add:request.build_absolute_uri|urlencode }}" target="_blank" class="share-btn whatsapp">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                                WhatsApp
+                            </a>
+                            <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode }}&title={{ selected_post.title|urlencode }}&summary={{ 'Read this article on my blog: '|add:selected_post.title|urlencode }}" target="_blank" class="share-btn linkedin">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+                                LinkedIn
+                            </a>
+                        </div>
+                    </div>
+                </footer>
+            </article>
+            
+            <div class="post-navigation">
+                <a href="{% url 'blog_home' %}" class="back-to-list-btn">&larr; Back to all articles</a>
+            </div>
+        </div>
+        
+        {% else %}
+        <!-- Blog List View -->
+        {% if not posts and not search_query %}
+        <div class="blog-soon-container fade-in">
+            <div class="soon-badge">
+                <span class="dot-soon"></span>
+                Coming Soon
+            </div>
+            <h2 class="soon-title">Blogs & Thoughts in Progress ✍️</h2>
+            <p class="soon-description">I’ll be sharing articles, experiences, thoughts, and learnings around software development, AI, productivity, backend engineering, student life, and topics that genuinely interest me.</p>
+            <div class="soon-topics">
+                <p class="soon-topics-title">Topics I Write About</p>
+                <div class="soon-topics-grid">
+                    <span class="category-badge category-django">Web Development</span>
+                    <span class="category-badge category-ai-ml">AI & Machine Learning</span>
+                    <span class="category-badge category-backend-development">Backend Development</span>
+                    <span class="category-badge category-system-design">DSA & Problem Solving</span>
+                    <span class="category-badge category-dsa">Productivity</span>
+                    <span class="category-badge category-ui-ux">Tech & Career</span>
+                    <span class="category-badge category-web-development">Random Thoughts</span>
+                </div>
+            </div>
+            
+            <a href="{% url 'portfolio_home' %}" class="back-home-link">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                Back to Portfolio
+            </a>
+        </div>
+        {% else %}
+        <!-- Blog List View -->
+        <!-- Blog Header -->
+        <div class="blog-header-section fade-in">
+            <h1 class="blog-main-title">Blogs & Thoughts</h1>
+            <span class="blog-subtitle-label">Thoughts, Ideas & Writing</span>
+            <p class="blog-subtitle">A space where I share thoughts on technology, productivity, AI, development, learning, and topics that interest me beyond coding.</p>
+        </div>
+        
+        <!-- Search Bar -->
+        <div class="blog-search-section fade-in">
+            <div class="search-header">
+                {% if search_query %}
+                <a href="{% url 'blog_home' %}" class="back-to-blog-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    Back to all articles
+                </a>
+                {% endif %}
+            </div>
+            <form method="get" action="{% url 'blog_home' %}" class="search-form">
+                <div class="search-input-wrapper">
+                    <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <input type="text" name="search" value="{{ search_query }}" placeholder="Search thoughts, articles, opinions, or topics..." class="search-input" autocomplete="off" aria-label="Search articles by title or keyword">
+                    {% if search_query %}
+                    <a href="{% url 'blog_home' %}" class="clear-search" aria-label="Clear search query">&times;</a>
+                    {% endif %}
+                </div>
+                <button type="submit" class="search-btn">Search</button>
+            </form>
+        </div>
+        
+        <!-- Featured Article Section (Latest Post on First Page, when not searching) -->
+        {% if posts and page_obj.number == 1 and not search_query %}
+        {% with featured_post=posts|first %}
+        <div class="featured-post-container fade-in">
+            <span class="featured-label">Featured Article</span>
+            <div class="featured-post-card">
+                <div class="featured-post-image">
+                    {% if featured_post.image %}
+                    <img src="{{ featured_post.image.url }}" alt="{{ featured_post.title }}">
+                    {% else %}
+                    <div class="featured-placeholder-image">
+                        <div class="tech-pattern"></div>
+                        <span class="placeholder-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                <line x1="8" y1="21" x2="16" y2="21"></line>
+                                <line x1="12" y1="17" x2="12" y2="21"></line>
+                            </svg>
+                        </span>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div class="featured-post-content">
+                    <div class="featured-meta-header">
+                        <span class="category-badge category-{{ featured_post.category|slugify }}">{{ featured_post.category }}</span>
+                        <span class="read-time">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            {{ featured_post.read_time }}
+                        </span>
+                    </div>
+                    
+                    <h2 class="featured-title">
+                        <a href="{% url 'blog_detail' featured_post.slug %}">{{ featured_post.title }}</a>
+                    </h2>
+                    
+                    <p class="featured-excerpt">
+                        {{ featured_post.body|striptags|truncatewords:32 }}
+                    </p>
+                    
+                    <div class="featured-footer">
+                        <span class="featured-date">{{ featured_post.date_posted|date:"M d, Y" }}</span>
+                        <a href="{% url 'blog_detail' featured_post.slug %}" class="featured-read-btn">
+                            Read Article
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 5"></polyline>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endwith %}
+        {% endif %}
+        
+        <!-- Grid of Articles -->
+        <div class="posts-section-divider">
+            <h3>{% if search_query %}Search Results{% elif page_obj.number == 1 %}All Publications{% else %}More Publications{% endif %}</h3>
+            <span class="divider-line"></span>
+        </div>
+        
+        <div class="posts-grid">
+            {% for post in posts %}
+            <article class="post-card fade-in">
+                <a href="{% url 'blog_detail' post.slug %}" class="card-link-wrapper">
+                    <div class="post-card-image">
+                        {% if post.image %}
+                        <img src="{{ post.image.url }}" alt="{{ post.title }}" loading="lazy">
+                        {% else %}
+                        <div class="card-placeholder-image">
+                            <div class="tech-pattern"></div>
+                            <span class="placeholder-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                                    <path d="M16 18l2-2v-3l-2-2h-3v7h3z"></path>
+                                    <path d="M8 2v20"></path>
+                                    <path d="M3 5h5"></path>
+                                    <path d="M3 19h5"></path>
+                                    <path d="M3 12h5"></path>
+                                </svg>
+                            </span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="post-card-content">
+                        <div class="post-card-meta-header">
+                            <span class="category-badge category-{{ post.category|slugify }}">{{ post.category }}</span>
+                            <span class="read-time">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                </svg>
+                                {{ post.read_time }}
+                            </span>
+                        </div>
+                        
+                        <h3 class="post-card-title">{{ post.title }}</h3>
+                        <p class="post-card-excerpt">{{ post.body|striptags|truncatewords:20 }}</p>
+                        
+                        <div class="post-card-footer">
+                            <span class="post-card-date">{{ post.date_posted|date:"M d, Y" }}</span>
+                            <span class="post-card-link-btn">
+                                Read Article
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 5"></polyline>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </article>
+            {% empty %}
+            <div class="no-posts-message fade-in">
+                <div class="no-posts-icon">
+                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </div>
+                <h3>No posts found for “{{ search_query }}”</h3>
+                <p class="no-posts-description">Looks like there are no articles matching your search yet.</p>
+                
+                <div class="no-posts-suggestions">
+                    <span class="suggestions-label">Try searching for:</span>
+                    <ul class="suggestions-list">
+                        <li><a href="?search=Web+Development">Web Development</a></li>
+                        <li><a href="?search=AI">AI</a></li>
+                        <li><a href="?search=Backend">Backend</a></li>
+                        <li><a href="?search=Productivity">Productivity</a></li>
+                        <li><a href="?search=DSA">DSA</a></li>
+                        <li><a href="?search=UI/UX">UI/UX</a></li>
+                    </ul>
+                </div>
+                
+                <p class="explore-all-text">Or <a href="{% url 'blog_home' %}" class="explore-all-link">explore all upcoming posts and writings</a>.</p>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Pagination -->
+        {% if page_obj.has_other_pages %}
+        <div class="pagination fade-in">
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}" class="page-link">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+                Previous
+            </a>
+            {% endif %}
+            
+            <div class="page-numbers">
+                {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                <span class="page-number active">{{ num }}</span>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <a href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}" class="page-number">{{ num }}</a>
+                {% endif %}
+                {% endfor %}
+            </div>
+            
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}" class="page-link">
+                Next
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </a>
+            {% endif %}
+        </div>
+        {% endif %}
+        {% endif %}
+        {% endif %}
+    </div>
+</section>
+{% endblock content %}
