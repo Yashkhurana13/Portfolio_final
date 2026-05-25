@@ -1,5 +1,8 @@
 from django.db import models
 from django.core.validators import FileExtensionValidator
+from io import BytesIO
+from PIL import Image
+from django.core.files import File
 
 class Profile(models.Model):
     name = models.CharField(max_length=100)
@@ -38,7 +41,7 @@ class Profile(models.Model):
 
 class Skill(models.Model):
     name = models.CharField(max_length=50)
-    category = models.CharField(max_length=50, help_text="e.g., Language, Framework")
+    category = models.CharField(max_length=50, help_text="e.g., Language, Framework", db_index=True)
     order = models.IntegerField(default=0)
 
     class Meta:
@@ -58,6 +61,29 @@ class Project(models.Model):
     github_link = models.URLField(blank=True, null=True)
     live_link = models.URLField(blank=True, null=True)
     order = models.IntegerField(default=0)
+
+    def save(self, *args, **kwargs):
+        is_new_image = False
+        if self.image:
+            try:
+                old_instance = Project.objects.get(pk=self.pk)
+                if old_instance.image != self.image:
+                    is_new_image = True
+            except Project.DoesNotExist:
+                is_new_image = True
+
+            if is_new_image:
+                img = Image.open(self.image)
+                if img.mode != 'RGB':
+                    img = img.convert('RGB')
+                img.thumbnail((1920, 1080), Image.Resampling.LANCZOS)
+                output = BytesIO()
+                img.save(output, format='JPEG', quality=85, optimize=True)
+                output.seek(0)
+                file_name = self.image.name.split('.')[0]
+                self.image = File(output, name=f"{file_name}.jpg")
+
+        super().save(*args, **kwargs)
 
     class Meta:
         ordering = ['order', 'title']
@@ -122,3 +148,18 @@ class ContactMessage(models.Model):
 
     def __str__(self):
         return f"Message from {self.name} on {self.date_sent.strftime('%Y-%m-%d')}"
+
+class VisitorLog(models.Model):
+    ip_address = models.CharField(max_length=64, null=True, blank=True, help_text="Stores IP or Hash")
+    path = models.CharField(max_length=255, db_index=True)
+    method = models.CharField(max_length=10)
+    user_agent = models.TextField(blank=True, null=True)
+    referrer = models.TextField(blank=True, null=True)
+    timestamp = models.DateTimeField(auto_now_add=True, db_index=True)
+
+    class Meta:
+        ordering = ['-timestamp']
+
+    def __str__(self):
+        return f"{self.path} - {self.timestamp.strftime('%Y-%m-%d %H:%M')}"
+

@@ -36,3 +36,9 @@ Thumbs.db
 # Project specific
 django_errors.log
 staticfiles/
+media/
+media_root/
+node_modules/
+build/
+dist/
+*.egg-info/

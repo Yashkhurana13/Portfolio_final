@@ -94,9 +94,12 @@ def portfolio_view(request):
 
 
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 @csrf_protect
 @require_http_methods(["POST"])
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def update_profile_view(request):
     profile = Profile.objects.first()
     if not profile:

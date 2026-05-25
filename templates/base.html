@@ -12,6 +12,9 @@
     
     <title>{% block title %}{{ profile.name|default:'Yash Khurana' }} | Software Engineer Portfolio{% endblock %}</title>
 
+    <!-- SEO Canonical URL -->
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+
     <!-- Open Graph / Facebook Social Previews -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">

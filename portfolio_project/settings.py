@@ -25,12 +25,19 @@ import mimetypes
 mimetypes.add_type("application/javascript", ".js", True)
 
 
-# SECURITY WARNING: keep the secret key used in production secret!
-# Load from environment variable in production
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-he^hhkzd2v%xai2fs0so^9y1315s#40a7gx3_@@-e!ovx$@2tt')
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DJANGO_DEBUG', 'True').lower() in ('true', '1', 'yes')
+
+# Analytics Privacy Setting
+ENABLE_RAW_IP_LOGGING = os.getenv('ENABLE_RAW_IP_LOGGING', 'False').lower() == 'true'
+
+# SECURITY WARNING: keep the secret key used in production secret!
+if DEBUG:
+    SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-he^hhkzd2v%xai2fs0so^9y1315s#40a7gx3_@@-e!ovx$@2tt')
+else:
+    SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+    if not SECRET_KEY:
+        raise ValueError("DJANGO_SECRET_KEY environment variable is missing, but required when DEBUG=False.")
 
 ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1,0.0.0.0,10.214.128.98').split(',')
 RENDER_EXTERNAL_HOSTNAME = os.getenv('RENDER_EXTERNAL_HOSTNAME')
@@ -88,6 +95,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',       # CORS headers (must be before CommonMiddleware)
     'core.middleware.SecurityHeadersMiddleware',  # Custom security headers
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'core.middleware.VisitorAnalyticsMiddleware', # Analytics (requires sessions)
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -199,8 +207,20 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
-MEDIA_URL = 'media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+# AWS S3 Settings (if configured in production)
+AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+if not DEBUG and AWS_STORAGE_BUCKET_NAME:
+    AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+    AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME', 'us-east-1')
+    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+    AWS_S3_FILE_OVERWRITE = False
+    
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+else:
+    MEDIA_URL = 'media/'
+    MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -253,12 +273,6 @@ LOGGING = {
         },
     },
     'handlers': {
-        'file': {
-            'level': 'ERROR',
-            'class': 'logging.FileHandler',
-            'filename': BASE_DIR / 'django_errors.log',
-            'formatter': 'verbose',
-        },
         'console': {
             'level': 'INFO',
             'class': 'logging.StreamHandler',
@@ -266,12 +280,12 @@ LOGGING = {
         },
     },
     'root': {
-        'handlers': ['console', 'file'],
+        'handlers': ['console'],
         'level': 'INFO',
     },
     'loggers': {
         'django.security': {
-            'handlers': ['file', 'console'],
+            'handlers': ['console'],
             'level': 'WARNING',
             'propagate': False,
         },
