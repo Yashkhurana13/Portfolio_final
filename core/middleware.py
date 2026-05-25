@@ -21,20 +21,51 @@ class SecurityHeadersMiddleware:
         
         # Content Security Policy (CSP)
         response['Content-Security-Policy'] = (
-            "default-src 'self'; "
-            "script-src 'self' https://www.google.com https://www.gstatic.com 'unsafe-inline' 'unsafe-eval'; "
-            "worker-src 'self'; "
-            "style-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com 'unsafe-inline'; "
-            "font-src 'self' https://fonts.gstatic.com https://fonts.googleapis.com; "
-            "img-src 'self' data: https:; "
-            "connect-src 'self' https://www.google.com; "
-            "media-src 'self'; "
-            "frame-src 'self' https://www.google.com https://recaptcha.google.com; "
-            "frame-ancestors 'self'; "
-            "base-uri 'self'; "
-            "form-action 'self';"
-        )
-        
+    "default-src 'self'; "
+
+    "script-src 'self' "
+    "https://www.google.com "
+    "https://www.gstatic.com "
+    "https://www.googletagmanager.com "
+    "https://www.google-analytics.com "
+    "https://www.clarity.ms "
+    "https://scripts.clarity.ms "
+    "'unsafe-inline' "
+    "'unsafe-eval'; "
+
+    "connect-src 'self' "
+    "https://www.google.com "
+    "https://www.google-analytics.com "
+    "https://region1.google-analytics.com "
+    "https://www.clarity.ms "
+    "https://scripts.clarity.ms "
+    "https://x.clarity.ms "
+    "wss://*.clarity.ms; "
+
+    "worker-src 'self' blob:; "
+
+    "style-src 'self' "
+    "https://fonts.googleapis.com "
+    "'unsafe-inline'; "
+
+    "font-src 'self' "
+    "https://fonts.gstatic.com "
+    "data:; "
+
+    "img-src 'self' data: https: blob:; "
+
+    "media-src 'self' blob:; "
+
+    "frame-src 'self' "
+    "https://www.google.com "
+    "https://recaptcha.google.com; "
+
+    "frame-ancestors 'self'; "
+
+    "base-uri 'self'; "
+
+    "form-action 'self';"
+)
         # Permissions Policy (formerly Feature Policy)
         response['Permissions-Policy'] = (
             "camera=(), "

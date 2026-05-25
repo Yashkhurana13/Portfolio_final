@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,12 +7,20 @@
     <meta name="description" content="{% block meta_description %}Explore the professional developer portfolio of {{ profile.name|default:'YK' }} — a passionate Software Engineer specializing in backend systems, web architectures, and intelligent digital products.{% endblock %}">
     <meta name="keywords" content="Yash Khurana, YK, Software Engineer, Portfolio, Full Stack Developer, Backend Engineer, Python, Django, Web Developer, Resume">
     <meta name="author" content="{{ profile.name|default:'Yash Khurana' }}">
-    
-    <!-- Favicon (Modern SVG Emoji icon - Zero assets overhead) -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💻</text></svg>">
-    
-    <title>{% block title %}{{ profile.name|default:'Yash Khurana' }} | Software Engineer Portfolio{% endblock %}</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-328LH4GMS0"></script>
 
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'G-328LH4GMS0');
+</script>
+    <!-- Favicon (Modern SVG Emoji icon - Zero assets overhead) -->
+    <!-- Favicon -->
+<link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %}">
+
+<title>{% block title %}Yash Khurana | Software Engineer Portfolio{% endblock %}</title>
     <!-- SEO Canonical URL -->
     <link rel="canonical" href="{{ request.build_absolute_uri }}">
 
@@ -20,14 +29,14 @@
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
     <meta property="og:title" content="{% block og_title %}{{ profile.name|default:'Yash Khurana' }} | Software Engineer Portfolio{% endblock %}">
     <meta property="og:description" content="{% block og_description %}Explore the professional developer portfolio of {{ profile.name|default:'YK' }} — a passionate Software Engineer specializing in backend systems, web architectures, and intelligent digital products.{% endblock %}">
-    <meta property="og:image" content="{% block og_image %}{{ request.scheme }}://{{ request.get_host }}/static/assets/og-image.png{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}https://yashkhurana.dev/static/assets/og-image.png{% endblock %}">
 
     <!-- Twitter Preview Cards -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="{{ request.build_absolute_uri }}">
     <meta name="twitter:title" content="{% block twitter_title %}{{ profile.name|default:'Yash Khurana' }} | Software Engineer Portfolio{% endblock %}">
     <meta name="twitter:description" content="{% block twitter_description %}Explore the professional developer portfolio of {{ profile.name|default:'YK' }} — a passionate Software Engineer specializing in backend systems, web architectures, and intelligent digital products.{% endblock %}">
-    <meta name="twitter:image" content="{% block twitter_image %}{{ request.scheme }}://{{ request.get_host }}/static/assets/og-image.png{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}https://yashkhurana.dev/static/assets/og-image.png{% endblock %}">
 
     <!-- DNS Prefetching -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
@@ -41,7 +50,13 @@
     <!-- Static Assets -->
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}?v={% now 'U' %}">
-    
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "wwqmtldc9s");
+</script>    
 </head>
 <body>
     <div class="grid-bg"></div>
