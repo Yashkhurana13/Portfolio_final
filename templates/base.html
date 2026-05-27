@@ -126,7 +126,7 @@ gtag('config', 'G-328LH4GMS0');
     </footer>
 
     <!-- Custom JS -->
-    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/main.js' %}?v={% now 'U' %}"></script>
     {% block scripts %}{% endblock %}
 </body>
 </html>

@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Intersection Observer for Animations (Fade in)
     const faders = document.querySelectorAll('.fade-in');
     const appearOptions = {
-        threshold: 0.1,
+        threshold: 0.01,
         rootMargin: "0px 0px -50px 0px"
     };
 
@@ -134,9 +134,9 @@ document.addEventListener("DOMContentLoaded", () => {
         appearOnScroll.observe(fader);
     });
 
-    // Make hero section elements visible immediately on load
-    const heroFaders = document.querySelectorAll('.hero-section .fade-in');
-    heroFaders.forEach(el => {
+    // Make hero section and single blog post elements visible immediately on load
+    const immediateFaders = document.querySelectorAll('.hero-section .fade-in, .single-post-view.fade-in');
+    immediateFaders.forEach(el => {
         setTimeout(() => {
             el.classList.add('appear');
         }, 300);
@@ -450,4 +450,29 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => toast.remove(), 500);
         }, 3000);
     }
+
+    // Interactive 3D Perspective Card Tilt for Certifications
+    const certCards = document.querySelectorAll('.cert-card');
+    certCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            // Subtle 3D tilt calculation
+            const rotateX = (y - centerY) / 15;
+            const rotateY = (centerX - x) / 15;
+            
+            card.style.transform = `perspective(1000px) translateY(-12px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            card.style.transition = 'transform 0.1s ease-out, background 0.3s, border-color 0.3s, box-shadow 0.3s';
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = `perspective(1000px) translateY(0) rotateX(0) rotateY(0)`;
+            card.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), background 0.3s, border-color 0.3s, box-shadow 0.3s';
+        });
+    });
 });

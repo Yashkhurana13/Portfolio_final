@@ -40,6 +40,8 @@ class SecurityHeadersMiddleware:
     "https://www.clarity.ms "
     "https://scripts.clarity.ms "
     "https://x.clarity.ms "
+    "https://o.clarity.ms "
+    "https://*.clarity.ms "
     "wss://*.clarity.ms; "
 
     "worker-src 'self' blob:; "

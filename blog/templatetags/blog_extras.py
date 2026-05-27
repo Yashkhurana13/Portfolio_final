@@ -3,6 +3,7 @@ Custom template filters for the blog app.
 """
 import bleach
 from django import template
+from django.utils.safestring import mark_safe
 
 register = template.Library()
 
@@ -32,16 +33,18 @@ ALLOWED_ATTRIBUTES = {
 @register.filter(name='sanitise_html', is_safe=True)
 def sanitise_html(value):
     """
-    Sanitise HTML content using bleach before rendering with |safe.
-    Strips any tags or attributes not in the allow-list.
+    Sanitise HTML content using bleach before rendering.
+    Strips any tags or attributes not in the allow-list and marks it safe.
     Usage: {{ post.body|sanitise_html }}
     """
     if not value:
         return ''
-    return bleach.clean(
+    cleaned = bleach.clean(
         value,
         tags=ALLOWED_TAGS,
         attributes=ALLOWED_ATTRIBUTES,
         strip=True,      # Strip disallowed tags (don't escape them)
         strip_comments=True,
     )
+    return mark_safe(cleaned)
+
