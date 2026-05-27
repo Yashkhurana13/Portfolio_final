@@ -26,14 +26,16 @@ gtag('config', 'G-328LH4GMS0');
 
     <!-- Open Graph / Facebook Social Previews -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ request.build_absolute_uri }}">
-    <meta property="og:title" content="{% block og_title %}{{ profile.name|default:'Yash Khurana' }} | Software Engineer Portfolio{% endblock %}">
-    <meta property="og:description" content="{% block og_description %}Explore the professional developer portfolio of {{ profile.name|default:'YK' }} — a passionate Software Engineer specializing in backend systems, web architectures, and intelligent digital products.{% endblock %}">
+    <meta property="og:url" content="{% block og_url %}{{ request.build_absolute_uri }}{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}Yash Khurana | Full Stack & AI Software Engineer{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Production-grade software engineer specializing in Django, AI systems, AWS and scalable full-stack applications.{% endblock %}">
     <meta property="og:image" content="{% block og_image %}https://yashkhurana.dev/static/assets/og-image.png{% endblock %}">
-
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/png">
     <!-- Twitter Preview Cards -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="{{ request.build_absolute_uri }}">
+    <meta name="twitter:url" content="{% block twitter_url %}{{ request.build_absolute_uri }}{% endblock %}">
     <meta name="twitter:title" content="{% block twitter_title %}{{ profile.name|default:'Yash Khurana' }} | Software Engineer Portfolio{% endblock %}">
     <meta name="twitter:description" content="{% block twitter_description %}Explore the professional developer portfolio of {{ profile.name|default:'YK' }} — a passionate Software Engineer specializing in backend systems, web architectures, and intelligent digital products.{% endblock %}">
     <meta name="twitter:image" content="{% block twitter_image %}https://yashkhurana.dev/static/assets/og-image.png{% endblock %}">

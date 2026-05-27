@@ -451,6 +451,24 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 3000);
     }
 
+    // LinkedIn Share with Auto-Copy
+    const linkedinShareBtns = document.querySelectorAll('.js-linkedin-share');
+    linkedinShareBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const caption = btn.getAttribute('data-share-caption');
+            if (caption && navigator.clipboard) {
+                navigator.clipboard.writeText(caption)
+                    .then(() => {
+                        showToast("Caption copied to clipboard!");
+                    })
+                    .catch(err => {
+                        console.warn("Could not auto-copy caption to clipboard", err);
+                    });
+            }
+            // Default href opens the window because of target="_blank"
+        });
+    });
+
     // Interactive 3D Perspective Card Tilt for Certifications
     const certCards = document.querySelectorAll('.cert-card');
     certCards.forEach(card => {
