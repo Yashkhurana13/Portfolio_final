@@ -94,6 +94,7 @@ class SecurityHeadersMiddleware:
 import time
 import hashlib
 from datetime import datetime
+from urllib import request, response
 from django.conf import settings
 from .models import VisitorLog
 
@@ -104,7 +105,7 @@ class VisitorAnalyticsMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
         self.ignore_prefixes = ('/static/', '/media/', '/admin/', '/favicon.ico')
-        self.bot_agents = ('googlebot', 'bingbot', 'slurp', 'duckduckbot', 'baiduspider', 'yandexbot')
+        self.bot_agents = ('googlebot','bingbot','slurp','duckduckbot','baiduspider','yandexbot','facebookexternalhit','facebot','linkedinbot','twitterbot','slackbot')
 
     def __call__(self, request):
         response = self.get_response(request)
@@ -118,6 +119,9 @@ class VisitorAnalyticsMiddleware:
             
             user_agent = request.META.get('HTTP_USER_AGENT', '')
             ua_lower = user_agent.lower()
+            # Skip analytics for social/media crawlers
+            if request.method == 'HEAD':
+                return response
             if any(bot in ua_lower for bot in self.bot_agents):
                 return response
 
