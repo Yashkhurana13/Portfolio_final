@@ -397,83 +397,11 @@
                     </a>
                     {% endif %}
                 </div>
-                <div class="share-portfolio-container" style="margin-top: 2rem; display: flex; justify-content: center;">
-                    <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://yashkhurana.dev&title=Yash%20Khurana%20Portfolio" target="_blank" class="btn btn-secondary js-linkedin-share" data-share-caption="Check out Yash Khurana's portfolio — Full Stack &amp; AI Software Engineer 🚀&#10;https://yashkhurana.dev" style="display: inline-flex; align-items: center; gap: 0.5rem;">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
-                        Share on LinkedIn
-                    </a>
-                </div>
+                
             </div>
         </div>
     </div>
 </section>
 
-<!-- Edit Profile Modal -->
-<div class="edit-profile-modal-overlay" id="edit-profile-modal">
-    <div class="edit-profile-modal-container">
-        <div class="edit-profile-modal-header">
-            <h3>Update Profile & Hero Cards</h3>
-            <button class="edit-profile-modal-close" id="edit-profile-close-btn" aria-label="Close Modal">&times;</button>
-        </div>
-        <form class="edit-profile-form" id="edit-profile-form" method="POST" action="{% url 'update_profile' %}">
-            {% csrf_token %}
-            <div class="form-section-title">General Info</div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="profile-name">Name</label>
-                    <input type="text" id="profile-name" name="name" value="{{ profile.name }}" required class="modal-input">
-                </div>
-                <div class="form-group">
-                    <label for="profile-badge">Availability Badge</label>
-                    <input type="text" id="profile-badge" name="available_badge_text" value="{{ profile.available_badge_text }}" required class="modal-input">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="profile-typewriter">Typewriter Specialties (comma-separated)</label>
-                <input type="text" id="profile-typewriter" name="typewriter_words" value="{{ profile.typewriter_words }}" required class="modal-input">
-            </div>
-
-            <div class="form-section-title">Floating Hero Card 1</div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="card1-title">Card 1 Title</label>
-                    <input type="text" id="card1-title" name="card_1_title" value="{{ profile.card_1_title|default:'Currently Learning' }}" required class="modal-input">
-                </div>
-                <div class="form-group">
-                    <label for="card1-text">Card 1 Description</label>
-                    <input type="text" id="card1-text" name="card_1_text" value="{{ profile.card_1_text|default:'Django, React, & System Design' }}" required class="modal-input">
-                </div>
-            </div>
-
-            <div class="form-section-title">Floating Hero Card 2</div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="card2-title">Card 2 Title</label>
-                    <input type="text" id="card2-title" name="card_2_title" value="{{ profile.card_2_title|default:'Working On' }}" required class="modal-input">
-                </div>
-                <div class="form-group">
-                    <label for="card2-text">Card 2 Description</label>
-                    <input type="text" id="card2-text" name="card_2_text" value="{{ profile.card_2_text|default:'Premium Agentic Portfolio App' }}" required class="modal-input">
-                </div>
-            </div>
-
-            <div class="form-section-title">Floating Hero Card 3</div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="card3-title">Card 3 Title</label>
-                    <input type="text" id="card3-title" name="card_3_title" value="{{ profile.card_3_title|default:'Focused On' }}" required class="modal-input">
-                </div>
-                <div class="form-group">
-                    <label for="card3-text">Card 3 Description</label>
-                    <input type="text" id="card3-text" name="card_3_text" value="{{ profile.card_3_text|default:'High Performance Web Architectures' }}" required class="modal-input">
-                </div>
-            </div>
-
-            <div class="modal-actions">
-                <button type="button" class="btn btn-modal-cancel" id="edit-profile-cancel-btn">Cancel</button>
-                <button type="submit" class="btn btn-modal-save" id="edit-profile-save-btn">Save Changes</button>
-            </div>
-        </form>
-    </div>
-</div>
+       
 {% endblock content %}
