@@ -35,7 +35,7 @@
 
 {% block og_image %}
     {% if selected_post and selected_post.image %}
-        {{ request.scheme }}://{{ request.get_host }}{{ selected_post.image.url }}
+        {{ selected_post.image.url }}
     {% else %}
         {{ block.super }}
     {% endif %}
@@ -59,7 +59,7 @@
 
 {% block twitter_image %}
     {% if selected_post and selected_post.image %}
-        {{ request.scheme }}://{{ request.get_host }}{{ selected_post.image.url }}
+        {{ selected_post.image.url }}
     {% else %}
         {{ block.super }}
     {% endif %}
