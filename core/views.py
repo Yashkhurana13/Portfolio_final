@@ -13,7 +13,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 @csrf_protect
-@require_http_methods(["GET", "POST"])
+@require_http_methods(["GET", "POST","HEAD"])
 @ratelimit(key='ip', rate='5/m', method='POST', block=False)
 @ratelimit(key='ip', rate='20/h', method='POST', block=False)
 def portfolio_view(request):
@@ -92,39 +92,3 @@ def portfolio_view(request):
     }
     return render(request, 'core/portfolio.html', context)
 
-
-from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required, user_passes_test
-
-@csrf_protect
-@require_http_methods(["POST"])
-@login_required
-@user_passes_test(lambda u: u.is_superuser)
-def update_profile_view(request):
-    profile = Profile.objects.first()
-    if not profile:
-        profile = Profile.objects.create(name="Yash Khurana")
-        
-    profile.name = escape(request.POST.get('name', profile.name))
-    profile.available_badge_text = escape(request.POST.get('available_badge_text', profile.available_badge_text))
-    profile.typewriter_words = escape(request.POST.get('typewriter_words', profile.typewriter_words))
-    profile.card_1_title = escape(request.POST.get('card_1_title', profile.card_1_title))
-    profile.card_1_text = escape(request.POST.get('card_1_text', profile.card_1_text))
-    profile.card_2_title = escape(request.POST.get('card_2_title', profile.card_2_title))
-    profile.card_2_text = escape(request.POST.get('card_2_text', profile.card_2_text))
-    profile.card_3_title = escape(request.POST.get('card_3_title', profile.card_3_title))
-    profile.card_3_text = escape(request.POST.get('card_3_text', profile.card_3_text))
-    profile.save()
-    
-    return JsonResponse({
-        'status': 'success',
-        'name': profile.name,
-        'available_badge_text': profile.available_badge_text,
-        'typewriter_words': profile.typewriter_words,
-        'card_1_title': profile.card_1_title,
-        'card_1_text': profile.card_1_text,
-        'card_2_title': profile.card_2_title,
-        'card_2_text': profile.card_2_text,
-        'card_3_title': profile.card_3_title,
-        'card_3_text': profile.card_3_text,
-    })
