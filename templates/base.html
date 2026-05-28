@@ -25,14 +25,15 @@ gtag('config', 'G-328LH4GMS0');
     <link rel="canonical" href="{{ request.build_absolute_uri }}">
 
     <!-- Open Graph / Facebook Social Previews -->
-    <meta property="og:type" content="website">
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
     <meta property="og:url" content="{% block og_url %}{{ request.build_absolute_uri }}{% endblock %}">
     <meta property="og:title" content="{% block og_title %}Yash Khurana | Full Stack & AI Software Engineer{% endblock %}">
     <meta property="og:description" content="{% block og_description %}Production-grade software engineer specializing in Django, AI systems, AWS and scalable full-stack applications.{% endblock %}">
     <meta property="og:image" content="{% block og_image %}https://yashkhurana.dev/static/assets/og-image.png{% endblock %}">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="{% block og_image_width %}1200{% endblock %}">
+    <meta property="og:image:height" content="{% block og_image_height %}630{% endblock %}">
+    <meta property="og:image:type" content="{% block og_image_type %}image/png{% endblock %}">
+    {% block extra_meta %}{% endblock %}
     <!-- Twitter Preview Cards -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="{% block twitter_url %}{{ request.build_absolute_uri }}{% endblock %}">
