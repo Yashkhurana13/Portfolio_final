@@ -20,7 +20,7 @@
             <div class="hero-buttons">
                 <a href="{% url 'blog_home' %}" class="btn btn-primary">Read Blog</a>
                 {% if profile.resume %}
-                <a href="{% url 'download_resume' %}" download class="btn btn-secondary">Download Resume</a>
+                <a href="{% url 'download_resume' %}" class="btn btn-secondary">Download Resume</a>
                 {% else %}
                 <a href="#contact" class="btn btn-secondary">Contact Me</a>
                 {% endif %}

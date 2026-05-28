@@ -87,7 +87,7 @@ def portfolio_view(request):
     }
     return render(request, 'core/portfolio.html', context)
 
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound, FileResponse
 
 @require_http_methods(["GET"])
 @ratelimit(key='ip', rate='10/h', method='GET', block=True)
@@ -96,7 +96,12 @@ def download_resume(request):
     profile = Profile.objects.first()
     if profile and profile.resume:
         logger.info(f"Resume downloaded by IP: {request.META.get('REMOTE_ADDR')}")
-        return redirect(profile.resume.url)
+        # Use FileResponse to force the browser to download the file instead of opening it inline
+        return FileResponse(
+            profile.resume.open('rb'),
+            as_attachment=True,
+            filename="Yash_Khurana_Resume.pdf"
+        )
     
     logger.warning(f"Resume download requested but no resume found. IP: {request.META.get('REMOTE_ADDR')}")
     return HttpResponseNotFound(
