@@ -87,3 +87,21 @@ def portfolio_view(request):
     }
     return render(request, 'core/portfolio.html', context)
 
+from django.http import HttpResponseNotFound
+
+@require_http_methods(["GET"])
+@ratelimit(key='ip', rate='10/h', method='GET', block=True)
+def download_resume(request):
+    """Secure, rate-limited endpoint for resume downloads"""
+    profile = Profile.objects.first()
+    if profile and profile.resume:
+        logger.info(f"Resume downloaded by IP: {request.META.get('REMOTE_ADDR')}")
+        return redirect(profile.resume.url)
+    
+    logger.warning(f"Resume download requested but no resume found. IP: {request.META.get('REMOTE_ADDR')}")
+    return HttpResponseNotFound(
+        '<div style="text-align:center;font-family:sans-serif;margin-top:20vh;">'
+        '<h1>404 Not Found</h1>'
+        '<p>Resume is not available at this moment. Please check back later.</p>'
+        '</div>'
+    )

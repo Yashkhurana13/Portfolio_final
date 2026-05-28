@@ -78,7 +78,7 @@ gtag('config', 'G-328LH4GMS0');
                 <li><a href="{% url 'portfolio_home' %}#education">Education</a></li>
                 <li><a href="{% url 'blog_home' %}">Blog</a></li>
                 {% if profile and profile.resume %}
-                <li><a href="{{ profile.resume.url }}" target="_blank" class="nav-resume-btn" style="border: 1px solid var(--accent); padding: 0.3rem 0.8rem; border-radius: 4px; color: var(--accent);">Resume</a></li>
+                <li><a href="{% url 'download_resume' %}" target="_blank" class="nav-resume-btn" style="border: 1px solid var(--accent); padding: 0.3rem 0.8rem; border-radius: 4px; color: var(--accent);">Resume</a></li>
                 {% endif %}
                 <li><a href="{% url 'portfolio_home' %}#contact" style="background: #27c93f; color: #fff; padding: 0.3rem 0.8rem; border-radius: 4px;">Contact</a></li>
             </ul>
