@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Terms & Conditions | Yash Khurana{% endblock %}
+{% block meta_description %}Terms and Conditions of Use for Yash Khurana's Portfolio.{% endblock %}
+
+{% block content %}
+<style>
+    .legal-content p { margin-bottom: 1rem; color: var(--text-dark); }
+    .legal-content ul { margin-left: 2rem; margin-bottom: 1.5rem; }
+    .legal-content li { margin-bottom: 0.5rem; color: var(--text-dark); }
+    .legal-content h2 { margin-top: 2.5rem; margin-bottom: 1rem; color: var(--text-dark); }
+    .legal-content a { color: var(--accent); text-decoration: underline; }
+</style>
+<section class="section" style="padding-top: 100px;">
+    <div class="container fade-in legal-content" style="max-width: 800px; margin: 0 auto; line-height: 1.6;">
+        <h1 style="margin-bottom: 2rem; color: var(--accent);">Terms & Conditions</h1>
+        
+        <p>Last updated: May 28, 2026</p>
+
+        <h2 style="margin-top: 2rem; margin-bottom: 1rem;">1. Acceptance of Terms</h2>
+        <p>By accessing and using this website (“Portfolio”), you agree to comply with these Terms & Conditions.</p>
+        <p>If you do not agree with any part of these terms, please discontinue use of the website.</p>
+
+        <h2>2. Website Purpose</h2>
+        <p>This website is intended for:</p>
+        <ul>
+            <li>portfolio presentation</li>
+            <li>educational content</li>
+            <li>technical blogging</li>
+            <li>showcasing software projects and experiments</li>
+        </ul>
+        <p>Content published here is provided for informational and educational purposes only.</p>
+
+        <h2>3. Intellectual Property</h2>
+        <p>Unless otherwise stated, all original content on this website — including articles, branding, designs, source code snippets, and project materials — is the intellectual property of Yash Khurana.</p>
+        <p>Unauthorized reproduction, redistribution, or commercial use is prohibited without prior written permission.</p>
+
+        <h2>4. External Links</h2>
+        <p>This website may contain links to third-party websites, tools, or services for reference and convenience.</p>
+        <p>We are not responsible for the content, availability, or practices of external websites.</p>
+
+        <h2>5. Limitation of Liability</h2>
+        <p>While reasonable efforts are made to keep the content accurate and up to date, no guarantees are made regarding completeness, reliability, or accuracy.</p>
+        <p>Use of the website and its content is at your own discretion and risk.</p>
+
+        <h2>6. Modifications</h2>
+        <p>These Terms & Conditions may be updated periodically without prior notice.</p>
+        <p>Continued use of the website after changes are published constitutes acceptance of the updated terms.</p>
+
+        <h2 style="margin-top: 2rem; margin-bottom: 1rem;">7. Contact</h2>
+        <p>For any questions regarding these Terms, please use the contact section available on the homepage.</p>
+    </div>
+</section>
+{% endblock content %}

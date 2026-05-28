@@ -110,3 +110,13 @@ def download_resume(request):
         '<p>Resume is not available at this moment. Please check back later.</p>'
         '</div>'
     )
+
+@require_http_methods(["GET"])
+def privacy_policy(request):
+    profile = Profile.objects.first()
+    return render(request, 'core/privacy_policy.html', {'profile': profile})
+
+@require_http_methods(["GET"])
+def terms_and_conditions(request):
+    profile = Profile.objects.first()
+    return render(request, 'core/terms_conditions.html', {'profile': profile})
