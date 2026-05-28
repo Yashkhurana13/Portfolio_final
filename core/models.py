@@ -148,18 +148,3 @@ class ContactMessage(models.Model):
 
     def __str__(self):
         return f"Message from {self.name} on {self.date_sent.strftime('%Y-%m-%d')}"
-
-class VisitorLog(models.Model):
-    ip_address = models.CharField(max_length=64, null=True, blank=True, help_text="Stores IP or Hash")
-    path = models.CharField(max_length=255, db_index=True)
-    method = models.CharField(max_length=10)
-    user_agent = models.TextField(blank=True, null=True)
-    referrer = models.TextField(blank=True, null=True)
-    timestamp = models.DateTimeField(auto_now_add=True, db_index=True)
-
-    class Meta:
-        ordering = ['-timestamp']
-
-    def __str__(self):
-        return f"{self.path} - {self.timestamp.strftime('%Y-%m-%d %H:%M')}"
-

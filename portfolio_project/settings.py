@@ -95,7 +95,6 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',       # CORS headers (must be before CommonMiddleware)
     'core.middleware.SecurityHeadersMiddleware',  # Custom security headers
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'core.middleware.VisitorAnalyticsMiddleware', # Analytics (requires sessions)
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
