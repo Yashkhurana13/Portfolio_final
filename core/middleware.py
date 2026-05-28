@@ -169,3 +169,33 @@ class VisitorAnalyticsMiddleware:
 
         return response
 
+
+from django.http import HttpResponse, JsonResponse
+from django_ratelimit.exceptions import Ratelimited
+
+class RateLimitMiddleware:
+    """
+    Middleware to gracefully handle django-ratelimit exceptions globally.
+    Returns a 429 response when limits are exceeded.
+    """
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        return self.get_response(request)
+
+    def process_exception(self, request, exception):
+        if isinstance(exception, Ratelimited):
+            msg = "Too many requests. Please try again later."
+            # Check for JSON/AJAX requests
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest' or request.headers.get('Accept', '').startswith('application/json'):
+                return JsonResponse({'error': msg}, status=429)
+            # Default HTML response for standard form submissions
+            return HttpResponse(
+                f'<div style="text-align:center;font-family:sans-serif;margin-top:20vh;">'
+                f'<h1>429 Too Many Requests</h1>'
+                f'<p>{msg}</p>'
+                f'</div>',
+                status=429
+            )
+        return None

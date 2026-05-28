@@ -101,6 +101,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'core.middleware.RateLimitMiddleware',
 ]
 
 ROOT_URLCONF = 'portfolio_project.urls'
@@ -123,6 +124,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'portfolio_project.wsgi.application'
 
+# Caching (Required for robust rate-limiting via django-ratelimit)
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'ratelimit-cache',
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases

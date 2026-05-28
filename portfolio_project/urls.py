@@ -55,6 +55,9 @@ sitemaps = {
     'blog': BlogSitemap,
 }
 
+from django_ratelimit.decorators import ratelimit
+# Protect admin login from brute-force attacks
+admin.site.login = ratelimit(key='ip', rate='5/m', method='POST', block=True)(admin.site.login)
 
 urlpatterns = [
     path('apun/', admin.site.urls),

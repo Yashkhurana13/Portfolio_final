@@ -14,10 +14,9 @@ logger = logging.getLogger(__name__)
 
 @csrf_protect
 @require_http_methods(["GET", "POST","HEAD"])
-@ratelimit(key='ip', rate='5/m', method='POST', block=False)
-@ratelimit(key='ip', rate='20/h', method='POST', block=False)
+@ratelimit(key='ip', rate='3/m', method='POST', block=True)
+@ratelimit(key='ip', rate='20/h', method='POST', block=True)
 def portfolio_view(request):
-    was_limited = getattr(request, 'limited', False)
 
     profile = Profile.objects.first()
     all_skills = Skill.objects.all()
@@ -34,10 +33,6 @@ def portfolio_view(request):
     certifications = Certification.objects.all()
 
     if request.method == "POST":
-        if was_limited:
-            logger.warning(f"Rate limit exceeded from IP: {request.META.get('REMOTE_ADDR')}")
-            messages.error(request, "You are sending messages too quickly. Please try again later.")
-            return redirect('portfolio_home')
 
         form = ContactForm(request.POST)
         if form.is_valid():
