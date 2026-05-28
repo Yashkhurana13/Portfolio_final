@@ -53,6 +53,7 @@ gtag('config', 'G-328LH4GMS0');
     <!-- Static Assets -->
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}?v={% now 'U' %}">
+    {% block extra_css %}{% endblock %}
 <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};

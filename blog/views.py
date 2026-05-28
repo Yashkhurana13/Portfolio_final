@@ -59,12 +59,26 @@ def blog_detail_view(request, slug):
     """Clean URL single-post view at /blog/<slug>/"""
     post = get_object_or_404(Post, slug=slug, is_published=True)
     profile = Profile.objects.first()
+    
+    # Fetch up to 3 related posts by category
+    related_posts_qs = Post.objects.filter(
+        category=post.category, 
+        is_published=True
+    ).exclude(id=post.id).order_by('-date_posted')[:3]
+    
+    related_posts = list(related_posts_qs)
+    
+    # If not enough, fill with latest posts
+    if len(related_posts) < 3:
+        existing_ids = [p.id for p in related_posts] + [post.id]
+        more_posts = Post.objects.filter(
+            is_published=True
+        ).exclude(id__in=existing_ids).order_by('-date_posted')[:3 - len(related_posts)]
+        related_posts.extend(list(more_posts))
+
     context = {
         'profile': profile,
-        'selected_post': post,
-        # These keep the template happy when it checks for their existence
-        'posts': Post.objects.none(),
-        'page_obj': None,
-        'search_query': '',
+        'post': post,
+        'related_posts': related_posts,
     }
-    return render(request, 'blog/blog.html', context)
+    return render(request, 'blog/post_detail.html', context)
