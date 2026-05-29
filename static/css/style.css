@@ -2679,22 +2679,59 @@ spline-viewer {
 .footer-container {
     max-width: 1200px;
     margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    align-items: flex-start;
 }
 
 .footer-logo {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--accent);
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text);
+    text-decoration: none;
+    margin-bottom: 1rem;
+    display: block;
 }
 
 .footer-tagline {
     font-family: 'Fira Code', monospace;
     font-size: 0.9rem;
     margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-muted);
     opacity: 0.8;
+}
+
+.footer-copyright {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+.footer-heading {
+    color: var(--text);
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.footer-links li a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.footer-links li a:hover {
+    color: var(--accent);
 }
 
 .footer-socials {
@@ -2718,9 +2755,38 @@ spline-viewer {
 
 @media (max-width: 768px) {
     .footer-container {
+        display: flex;
         flex-direction: column;
+        align-items: center;
+        justify-content: center;
         text-align: center;
-        gap: 1.5rem;
+        gap: 2.5rem;
+        width: 100%;
+    }
+    
+    .footer-socials {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+    
+    .footer-col {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        width: 100%;
+    }
+    
+    .footer-links, .footer-col ul {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        width: 100%;
     }
 }
 

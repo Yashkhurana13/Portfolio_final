@@ -97,26 +97,27 @@ gtag('config', 'G-328LH4GMS0');
     </main>
 
     <footer class="main-footer">
-        <div class="footer-container fade-in" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; padding: 1rem 0 2rem 0; margin-top: 0;">
+        <div class="footer-container fade-in">
             
             <div class="footer-col">
-                <a href="{% url 'portfolio_home' %}" class="footer-logo" style="font-size: 1.5rem; font-weight: bold; color: var(--text); text-decoration: none; margin-bottom: 1rem; display: block;">YK</a>
-                <p class="footer-tagline" style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">Building digital experiences.</p>
-                <p style="color: var(--text-muted); font-size: 0.8rem;">&copy; {% now "Y" %} Yash Khurana. All rights reserved.</p>
+                <a href="{% url 'portfolio_home' %}" class="footer-logo">YK</a>
+                <p class="footer-tagline">Building digital experiences.</p>
+                <p class="footer-copyright">&copy; {% now "Y" %} Yash Khurana. All rights reserved.</p>
             </div>
             
             <div class="footer-col">
-                <h4 style="color: var(--text); margin-bottom: 1rem; font-size: 1rem;">Quick Links</h4>
-                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem;">
-                    <li><a href="{% url 'blog_home' %}" style="color: var(--text-muted); text-decoration: none; font-size: 0.9rem; transition: color 0.3s ease;">Blog</a></li>
-                    <li><a href="{% url 'privacy_policy' %}" style="color: var(--text-muted); text-decoration: none; font-size: 0.9rem; transition: color 0.3s ease;">Privacy Policy</a></li>
-                    <li><a href="{% url 'terms_and_conditions' %}" style="color: var(--text-muted); text-decoration: none; font-size: 0.9rem; transition: color 0.3s ease;">Terms & Conditions</a></li>
+                <h4 class="footer-heading">Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="{% url 'portfolio_home' %}">Portfolio</a></li>
+                    <li><a href="{% url 'blog_home' %}">Blog</a></li>
+                    <li><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
+                    <li><a href="{% url 'terms_and_conditions' %}">Terms & Conditions</a></li>
                 </ul>
             </div>
 
             <div class="footer-col">
-                <h4 style="color: var(--text); margin-bottom: 1rem; font-size: 1rem;">Connect</h4>
-                <div class="footer-socials" style="display: flex; gap: 1rem; align-items: center;">
+                <h4 class="footer-heading">Connect</h4>
+                <div class="footer-socials">
                     {% if profile.github_link %}
                     <a href="{{ profile.github_link }}" target="_blank" rel="noopener noreferrer" class="footer-icon" aria-label="GitHub">
                         <svg viewBox="0 0 24 24" fill="currentColor" style="width: 20px; height: 20px;"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
